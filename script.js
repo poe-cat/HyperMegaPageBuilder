@@ -147,18 +147,16 @@ function updateElementStyles(el, color, bg, fontSize, textAlign, centerElement, 
 
 function saveLayout() {
   const preview = document.getElementById('previewContent');
-  preview.innerHTML = '';
 
-  const styleTag = document.createElement('style');
-  styleTag.innerHTML = generateCSS();
-  preview.appendChild(styleTag);
-
-  preview.innerHTML += generateFullHTML();
+  preview.innerHTML = document.getElementById('editor').innerHTML;
 
   document.getElementById('editor').style.display = 'none';
   document.getElementById('controls').style.display = 'none';
+
   document.getElementById('preview').style.display = 'block';
 }
+
+
 
 function generateCSS() {
   let css = '';
@@ -202,32 +200,45 @@ function createElementHtml(el, index) {
   }
 }
 
+
 function editAgain() {
   document.getElementById('preview').style.display = 'none';
   document.getElementById('editor').style.display = 'block';
   document.getElementById('controls').style.display = 'block';
+  renderLayout(); //przywracamy układ edytora
 }
+
 
 function exportToZip() {
   const zip = new JSZip();
 
-  const indexHtml = `
+  const previewHTML = document.getElementById('previewContent').innerHTML;
+
+  const fullHTML = `
 <!DOCTYPE html>
 <html lang="pl">
 <head>
   <meta charset="UTF-8">
   <title>Moja Strona</title>
-  <link rel="stylesheet" href="style.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      padding: 2rem;
+      background-color: #ffffff;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
 </head>
 <body>
-${generateFullHTML()}
+${previewHTML}
 </body>
 </html>
   `.trim();
 
-  zip.file("index.html", indexHtml);
-  zip.file("style.css", generateCSS());
-
+  zip.file("index.html", fullHTML);
   zip.generateAsync({ type: "blob" }).then(function(content) {
     const link = document.createElement('a');
     link.href = URL.createObjectURL(content);
@@ -235,3 +246,4 @@ ${generateFullHTML()}
     link.click();
   });
 }
+

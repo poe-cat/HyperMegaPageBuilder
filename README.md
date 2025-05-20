@@ -100,6 +100,20 @@ Elementy strony przechowywane są w tablicy `layout`, której elementy mają str
 
 ---
 
+<p align="center">
+<img src="/docs/screen1.png" alt="screenshot" title="app screenshot">
+</p>
+---
+<p align="center">
+<img src="/docs/screen2.png" alt="screenshot" title="app screenshot">
+</p>
+---
+<p align="center">
+<img src="/docs/screen3.png" alt="screenshot" title="app screenshot">
+</p>
+
+---
+
 ## Ograniczenia
 
 - Brak edycji inline – elementy są edytowane tylko przez panel boczny.
